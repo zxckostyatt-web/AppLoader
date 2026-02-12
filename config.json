@@ -1,0 +1,26 @@
+{
+  "categories": [
+    {
+      "name": "Программы",
+      "apps": [
+        {
+          "name": "AnyDesk",
+          "url": "https://github.com/zxckostyatt-web/AppLoader/releases/download/AnyDesk/AnyDesk.exe"
+        },
+        {
+          "name": "SteamTools",
+          "url": "https://github.com/zxckostyatt-web/AppLoader/releases/download/SteamTools/st-setup-1.8.30.exe"
+        }
+      ]
+    },
+    {
+      "name": "Браузеры",
+      "apps": [
+        {
+          "name": "Google Chrome",
+          "url": "https://dl.google.com/chrome/install/latest/chrome_installer.exe"
+        }
+      ]
+    }
+  ]
+}
