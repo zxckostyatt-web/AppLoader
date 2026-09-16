@@ -1,0 +1,86 @@
+{
+  "version": 1,
+  "updated": "2026-09-16",
+  "items": [
+    {
+      "id": "7zip",
+      "name": "7-Zip",
+      "category": "Утилиты",
+      "description": "Архиватор с высокой степенью сжатия, поддерживает 7z, zip, rar, tar и другие форматы.",
+      "version": "24.09",
+      "author": "Igor Pavlov",
+      "url": "https://github.com/ip7z/7zip/releases/download/26.03/7z2603-x64.exe",
+      "homepage": "https://www.7-zip.org",
+      "fileName": "7z2603-x64.exe",
+      "sizeBytes": 1572864,
+      "sha256": "",
+      "tags": ["архиватор", "zip", "open source"]
+    },
+    {
+      "id": "AnyDesk",
+      "name": "AnyDesk",
+      "category": "Утилиты",
+      "description": "Anydesk используют для удаленого доступа",
+      "version": "24.09",
+      "author": "Igor Pavlov",
+      "url": "https://github.com/zxckostyatt-web/AppLoader/releases/download/AnyDesk/AnyDesk.exe",
+      "homepage": "https://anydesk.com/",
+      "fileName": "7z2603-x64.exe",
+      "sizeBytes": 1572864,
+      "sha256": "",
+      "tags": ["Удаленный доступ", "Anydesk"]
+    },
+    {
+      "id": "obs-studio",
+      "name": "OBS Studio",
+      "category": "Мультимедиа",
+      "description": "Программа для записи экрана и стриминга. Сцены, источники, фильтры, плагины.",
+      "version": "31.0",
+      "author": "OBS Project",
+      "url": "https://cdn-fastly.obsproject.com/downloads/OBS-Studio-32.2.2-Windows-x64-Installer.exe",
+      "homepage": "https://obsproject.com/",
+      "sizeBytes": 141557760,
+      "tags": ["стрим", "запись экрана", "видео"]
+    },
+    {
+      "id": "msi-afterburner",
+      "name": "MSI Afterburner",
+      "category": "Игровые утилиты",
+      "description": "Мониторинг FPS, температур и нагрузки, разгон видеокарты, оверлей в играх.",
+      "version": "4.6.6",
+      "author": "MSI",
+      "url": "https://download.msi.com/uti_exe/vga/MSIAfterburnerSetup.zip?__token__=exp=1789724585~acl=/*~hmac=a4af1b4465397bc223e82b1773bc2a02b340dcf1cadcf355f38bc2eb4b25ef7c",
+      "homepage": "https://www.msi.com/Landing/afterburner",
+      "sizeBytes": 58720256,
+      "tags": ["fps", "мониторинг", "разгон"]
+    },
+    {
+      "id": "wexside-crack-1-16-5",
+      "name": "Wexside Кряк 1.16.5",
+      "category": "Игровые утилиты",
+      "description": "Чит на маинкрафт 1.16.5",
+      "version": "7.5",
+      "author": "Dark Byte",
+      "url": "https://github.com/zxckostyatt-web/AppLoader/releases/download/WexSide/default.wexside.zip",
+      "homepage": "https://www.wexside.ru/",
+      "sizeBytes": 47185920,
+      "tags": [
+        "кряк",
+        "векс",
+        "singleplayer"
+      ]
+    },
+    {
+      "id": "notepadpp",
+      "name": "Notepad++",
+      "category": "Разработка",
+      "description": "Лёгкий текстовый редактор с подсветкой синтаксиса и плагинами.",
+      "version": "8.7",
+      "author": "Don Ho",
+      "url": "https://notepad-plus-plus.org/downloads/v8.9.8/",
+      "homepage": "https://notepad-plus-plus.org/",
+      "sizeBytes": 4718592,
+      "tags": ["редактор", "код"]
+    }
+  ]
+}
