@@ -12,6 +12,9 @@ jobs:
   build:
     runs-on: windows-latest
 
+    permissions:
+      contents: write
+
     steps:
       - uses: actions/checkout@v4
 
@@ -33,6 +36,10 @@ jobs:
           --self-contained false
           -p:PublishSingleFile=true
           -o publish
+
+      - name: Добавить catalog.json в артефакт (для истории релиза)
+        shell: bash
+        run: cp catalog.json publish/catalog.json
 
       - name: Артефакт сборки
         uses: actions/upload-artifact@v4
