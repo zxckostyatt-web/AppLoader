@@ -24,8 +24,14 @@ public sealed class MainForm : Form
     private Catalog _catalog = new();
     private CancellationTokenSource? _cts;
 
-    private readonly string _catalogPath =
-        Path.Combine(AppContext.BaseDirectory, "catalog.json");
+    /// <summary>Каталог загружается отсюда при каждом старте/обновлении.</summary>
+    private const string CatalogUrl =
+        "https://raw.githubusercontent.com/zxckostyatt-web/AppLoader/refs/heads/main/catalog.json";
+
+    /// <summary>Локальная копия — подстраховка, если сети нет.</summary>
+    private readonly string _catalogCachePath = Path.Combine(
+        Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
+        "DownloadHub", "catalog.json");
 
     private readonly string _downloadDir = Path.Combine(
         Environment.GetFolderPath(Environment.SpecialFolder.UserProfile),
@@ -129,15 +135,11 @@ public sealed class MainForm : Form
         var reload = new Button { Text = "Обновить каталог", Width = 140, Dock = DockStyle.Right };
         reload.Click += async (_, _) => await LoadCatalogAsync();
 
-        var fromUrl = new Button { Text = "Каталог по URL", Width = 130, Dock = DockStyle.Right };
-        fromUrl.Click += async (_, _) => await LoadCatalogFromUrlAsync();
-
         var openFolder = new Button { Text = "Папка загрузок", Width = 130, Dock = DockStyle.Right };
         openFolder.Click += (_, _) => OpenDownloadsFolder();
 
         top.Controls.Add(_search);
         top.Controls.Add(openFolder);
-        top.Controls.Add(fromUrl);
         top.Controls.Add(reload);
 
         // Статус-строка
@@ -160,40 +162,40 @@ public sealed class MainForm : Form
     {
         try
         {
-            SetStatus("Чтение catalog.json…");
-            _catalog = await CatalogService.LoadFromFileAsync(_catalogPath);
+            SetStatus("Загрузка каталога с GitHub…");
+            _catalog = await CatalogService.LoadFromUrlAsync(_http, CatalogUrl);
+
+            // Обновили кэш, чтобы приложение работало и без сети в следующий раз.
+            try { await CatalogService.SaveAsync(_catalog, _catalogCachePath); }
+            catch { /* кэш необязателен, не мешаем основному сценарию */ }
+
             FillCategories();
             RefreshList();
-            SetStatus($"Загружено элементов: {_catalog.Items.Count}. Каталог: {_catalogPath}");
+            SetStatus($"Загружено элементов: {_catalog.Items.Count}. Источник: GitHub.");
         }
         catch (Exception ex)
         {
-            SetStatus("Не удалось прочитать каталог.");
-            MessageBox.Show(this, ex.Message, "Ошибка каталога",
-                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            SetStatus("Нет сети или GitHub недоступен — пробуем локальный кэш…");
+            await LoadCatalogFromCacheAsync(ex);
         }
     }
 
-    private async Task LoadCatalogFromUrlAsync()
+    private async Task LoadCatalogFromCacheAsync(Exception networkError)
     {
-        var url = Prompt.Show(this, "Введите ссылку на catalog.json:", "Каталог по URL");
-        if (string.IsNullOrWhiteSpace(url))
-            return;
-
         try
         {
-            SetStatus("Загрузка каталога по сети…");
-            _catalog = await CatalogService.LoadFromUrlAsync(_http, url.Trim());
-            await CatalogService.SaveAsync(_catalog, _catalogPath);
+            _catalog = await CatalogService.LoadFromFileAsync(_catalogCachePath);
             FillCategories();
             RefreshList();
-            SetStatus($"Каталог обновлён из сети. Элементов: {_catalog.Items.Count}");
+            SetStatus($"Загружено из локального кэша ({_catalogCachePath}). Элементов: {_catalog.Items.Count}");
         }
-        catch (Exception ex)
+        catch (Exception cacheEx)
         {
-            SetStatus("Ошибка загрузки каталога.");
-            MessageBox.Show(this, ex.Message, "Ошибка",
-                MessageBoxButtons.OK, MessageBoxIcon.Warning);
+            SetStatus("Каталог недоступен.");
+            MessageBox.Show(this,
+                $"Не удалось загрузить каталог по сети:\n{networkError.Message}\n\n" +
+                $"Локальный кэш тоже недоступен:\n{cacheEx.Message}",
+                "Ошибка каталога", MessageBoxButtons.OK, MessageBoxIcon.Warning);
         }
     }
 
