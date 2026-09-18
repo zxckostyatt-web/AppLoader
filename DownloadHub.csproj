@@ -12,10 +12,10 @@
     <ApplicationHighDpiMode>PerMonitorV2</ApplicationHighDpiMode>
   </PropertyGroup>
 
-  <ItemGroup>
-    <None Update="catalog.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-  </ItemGroup>
+  <!--
+    catalog.json больше не читается локально: приложение загружает его
+    с GitHub (raw.githubusercontent.com) при каждом запуске. Файл в корне
+    репозитория остаётся источником для этого URL и примером формата.
+  -->
 
 </Project>
